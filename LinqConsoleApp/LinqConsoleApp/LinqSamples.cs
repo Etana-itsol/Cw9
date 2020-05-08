@@ -269,12 +269,11 @@ namespace LinqConsoleApp
                 Console.WriteLine(re);
             }
 
-            var res2 =
-              (from emp in Emps
-               where emp == (from tmps in Emps
-                                 orderby tmps.Salary descending
-                                 select tmps)
-               select emp);
+            var res2 =from emp in Emps
+                      where emp.Salary == (from emp1 in Emps
+                                           select emp1.Salary).Max()
+                      select emp;
+              
 
             foreach (var re in res2)
             {
