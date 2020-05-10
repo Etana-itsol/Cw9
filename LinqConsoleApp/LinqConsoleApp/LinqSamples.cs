@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
@@ -261,6 +261,7 @@ namespace LinqConsoleApp
         /// </summary>
         public void Przyklad4()
         {
+            Console.WriteLine("zad4");
             var res = Emps
                            .Where(x => x.Salary == (from emp in Emps select emp.Salary).Max());
 
@@ -288,6 +289,7 @@ namespace LinqConsoleApp
         /// </summary>
         public void Przyklad5()
         {
+            Console.WriteLine("zad5");
             var res = Emps
                            .Select(x => new
                            {
@@ -319,6 +321,7 @@ namespace LinqConsoleApp
         /// </summary>
         public void Przyklad6()
         {
+            Console.WriteLine("zad6");
             var res = Emps
                            .Join(Depts, emp => emp.Deptno, dept => dept.Deptno, (emp, dept) => new
                            {
@@ -334,7 +337,7 @@ namespace LinqConsoleApp
             var res2 = from emp in Emps
                         join dept in Depts
                         on emp.Deptno equals dept.Deptno
-                        select emp.Ename + ", " + dept.Deptno;
+                        select emp.Ename + ", " + dept.Dname;
             foreach (var re in res2)
             {
                 Console.WriteLine(re);
@@ -348,6 +351,7 @@ namespace LinqConsoleApp
         /// </summary>
         public void Przyklad7()
         {
+            Console.WriteLine("zad7");
             var res = Emps
                          .GroupBy(x => x.Job)
                          .Select(x=>new 
@@ -366,7 +370,7 @@ namespace LinqConsoleApp
                            select new
                            {
                                Praca = newEmps.Key,
-                               EmpCount = newEmps.Count()
+                               LiczbaPracowników = newEmps.Count()
                            });
             foreach (var re in res2)
             {
@@ -381,6 +385,7 @@ namespace LinqConsoleApp
         /// </summary>
         public void Przyklad8()
         {
+            Console.WriteLine("zad8");
             var res = Emps
                           .Where(x => x.Job == "Backend programmer");
             Console.WriteLine(res.Any());
@@ -398,6 +403,7 @@ namespace LinqConsoleApp
         /// </summary>
         public void Przyklad9()
         {
+            Console.WriteLine("zad9");
             var res = Emps
                           .Where(x => x.Job == "Frontend programmer")
                           .OrderByDescending(x => x.HireDate);
@@ -418,6 +424,7 @@ namespace LinqConsoleApp
         /// </summary>
         public void Przyklad10()
         {
+            Console.WriteLine("zad10");
             var res = Emps
                           .Select(x => (x.Ename, x.Job, x.HireDate))
                           .Union(Emps
@@ -443,6 +450,7 @@ namespace LinqConsoleApp
         //Znajdź pracownika z najwyższą pensją wykorzystując metodę Aggregate()
         public void Przyklad11()
         {
+            Console.WriteLine("zad11");
             var res = Emps
                           .Aggregate((a, b) => b.Salary > a.Salary ? b : a);
             Console.WriteLine(res);
@@ -456,12 +464,13 @@ namespace LinqConsoleApp
         //typu CROSS JOIN
         public void Przyklad12()
         {
+            Console.WriteLine("zad12");
             var res = Emps
-                          .SelectMany(x => Depts, (y, z) => new { EmpName = y.Ename, EmpJob = y.Job, z });
+                          .SelectMany(x => Depts, (y, z) => new { EmpName = y.Ename, EmpJob = y.Job, z.Dname });
             foreach (var re in res)
             {
                 Console.WriteLine(re);
-            }
+            }   
             var res2 = from emp in Emps
                       from dept in Depts
                       select new
